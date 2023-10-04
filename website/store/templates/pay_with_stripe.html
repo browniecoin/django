@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+    Pay With Stripe
+    <form action="{% url 'pay_with_stripe' %}" method="post">
+      {% csrf_token %}
+      <script
+        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+        data-key="pk_test_51NkXLbFCag9y8seG8O5iaBPxULVOduX2h4bQKOjFeBnMwCEmwnN2QveHNLgykMA34VGPigzHnqndLgiVF7x7dBjn00xaTIMv4E"
+        data-amount="{{ total_in_cents }}"
+        data-name="Example Company"
+        data-description="Example charge"
+        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+        data-locale="auto"
+        data-zip-code="true"
+        data-currency="usd">
+      </script>
+    </form>
+  </div>
+</section>
+{% endblock %}

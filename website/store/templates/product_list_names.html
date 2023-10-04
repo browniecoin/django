@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container my-5">
+<h3>List of Products</h3>
+
+<div class="container">
+  <div class="row">
+    <table >
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Wholesale Price</th>
+          <th>Your Price</th>
+          <th>Quantity</th>
+          <th>Brand</th>
+          <th>Category</th>
+          <th>Source</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+                {% for product in products %}
+        <tr >
+          <td>{{ forloop.counter }}</td>
+          <td>{{ product.name }}</td>
+          <td>${{ product.price }}</td>
+          <td>${{ product.wholesale_price }}</td>
+          <td>${{ product.your_price }}</td>
+          <td>{{ product.quantity }}</td>
+          <td>{{ product.brand }}</td>
+          <td>{{ product.category }}</td>
+          <td>{{ product.source_upload }}</td>
+          <td style="padding: 20px;"><a href="{% url 'edit_product' product.id %}" >Edit</a></td>
+        </tr>
+                {% endfor %}
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+{% endblock %}

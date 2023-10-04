@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    {% if user.is_authenticated %}
+          <h3><a  href="/edit_profile">{{ user.first_name }} {{ user.last_name }}</a> </h3>
+          <HR>
+            {% if user.solidfi %}
+                <a href="/my_profile_accounts/">{{user.solidfi}}</a>
+                <HR>
+                  {{account_id}}
+
+                <HR>
+                  <div class="container">
+
+                        <div class="container mt-4">
+                          <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                              <a class="nav-link" active data-toggle="tab" href="#tab1">Add Card Form</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link"  data-toggle="tab" href="#tab2">Cards</a>
+                            </li>
+                          </ul>
+
+                          <div class="tab-content">
+                            <div id="tab1" class="tab-pane fade {% if show_cards == False %}show active{% endif %}">
+                              <div class="container mt-5">
+                                  <form action="/add_card/" method="post">
+                                      {% csrf_token %}
+                                      <div class="form-group">
+                                          <label for="cardType">Card Type:</label>
+                                          <input type="text" class="form-control" id="cardType" name="cardType" value="physical">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="label">Label:</label>
+                                          <input type="text" class="form-control" id="label" name="label" value="Meal Card">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="currency">Currency:</label>
+                                          <input type="text" class="form-control" id="currency" name="currency" value="USD">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="limitAmount">Limit Amount:</label>
+                                          <input type="text" class="form-control" id="limitAmount" name="limitAmount" value="100.00">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="limitInterval">Limit Interval:</label>
+                                          <input type="text" class="form-control" id="limitInterval" name="limitInterval" value="allTime">
+                                      </div>
+
+                                      <h3>Billing Address:</h3>
+                                      <div class="form-group">
+                                          <label for="billingAddressType">Address Type:</label>
+                                          <input type="text" class="form-control" id="billingAddressType" name="billingAddressType" value="billing">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="billingLine1">Address Line 1:</label>
+                                          <input type="text" class="form-control" id="billingLine1" name="billingLine1" value="{{user.billing_address_line1}}">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="billingLine2">Address Line 2:</label>
+                                          <input type="text" class="form-control" id="billingLine2" name="billingLine2" value="{{user.billing_address_line2}}">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="billingCity">City:</label>
+                                          <input type="text" class="form-control" id="billingCity" name="billingCity" value="{{user.billing_city}}">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="billingState">State:</label>
+                                          <input type="text" class="form-control" id="billingState" name="billingState" value="{{user.billing_state}}">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="billingCountry">Country:</label>
+                                          <input type="text" class="form-control" id="billingCountry" name="billingCountry" value="{{user.billing_country}}">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="billingPostalCode">Postal Code:</label>
+                                          <input type="text" class="form-control" id="billingPostalCode" name="billingPostalCode" value="{{user.billing_zipcode}}">
+                                      </div>
+
+                                      <h3>Shipping Address:</h3>
+                                      <div class="form-group">
+                                          <label for="shippingAddressType">Address Type:</label>
+                                          <input type="text" class="form-control" id="shippingAddressType" name="shippingAddressType" value="shipping">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="shippingLine1">Address Line 1:</label>
+                                          <input type="text" class="form-control" id="shippingLine1" name="shippingLine1" value="{{user.billing_address_line1}}">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="shippingLine2">Address Line 2:</label>
+                                          <input type="text" class="form-control" id="shippingLine2" name="shippingLine2" value="{{user.billing_address_line2}}">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="shippingCity">City:</label>
+                                          <input type="text" class="form-control" id="shippingCity" name="shippingCity" value="{{user.billing_city}}">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="shippingState">State:</label>
+                                          <input type="text" class="form-control" id="shippingState" name="shippingState" value="{{user.billing_state}}">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="shippingCountry">Country:</label>
+                                          <input type="text" class="form-control" id="shippingCountry" name="shippingCountry" value="{{user.billing_country}}">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="shippingPostalCode">Postal Code:</label>
+                                          <input type="text" class="form-control" id="shippingPostalCode" name="shippingPostalCode" value="{{user.billing_zipcode}}">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="allowedCategories">Allowed Categories:</label>
+                                          <input type="text" class="form-control" id="allowedCategories" name="allowedCategories[]" value="1234">
+                                          <input type="text" class="form-control" id="allowedCategories" name="allowedCategories[]" value="9878">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="bin">BIN:</label>
+                                          <select class="form-control" id="bin" name="bin">
+                                              <option value="credit">Credit</option>
+                                              <option value="debit">Debit</option>
+                                          </select>
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="embossingPerson">Embossing Person:</label>
+                                          <input type="text" class="form-control" id="embossingPerson" name="embossingPerson" value="{{user.first_name}} {% if user.m_name %} {{user.m_name}}. {% endif %} {{user.last_name}}">
+                                      </div>
+
+                                      <div class="form-group">
+                                          <label for="embossingBusiness">Embossing Business:</label>
+                                          <input type="text" class="form-control" id="embossingBusiness" name="embossingBusiness" value="">
+                                      </div>
+
+                                      <button type="submit" class="btn btn-primary">Submit</button>
+                                  </form>
+                              </div>
+
+                            </div>
+                            <div id="tab2" class="tab-pane fade {% if show_cards == True %}show active{% endif %}">
+                              <HR>
+                                {% if cards %}
+                                    <h2>Your Cards:</h2>
+                                    <ul>
+                                        {% for card in cards %}
+                                            <li>
+                                                <strong>Card ID:</strong> {{ card.id }}<br>
+                                                <strong>Card Type:</strong> {{ card.cardType }}<br>
+                                                <strong>Label:</strong> {{ card.label }}<br>
+                                                <strong>Limit Amount:</strong> {{ card.limitAmount }} {{ card.currency }}<br>
+                                                <strong>Last 4 Digits:</strong> {{ card.last4 }}<br>
+                                                <strong>Card Status:</strong> {{ card.cardStatus }}<br>
+                                                <strong>Expiry Month:</strong> {{ card.expiryMonth }} /
+                                                <strong>Expiry Year:</strong> {{ card.expiryYear }}<br>
+                                                <HR>
+                                                {% if card.cardStatus == 'pendingActivation' %} <a href="/add_card/?show_cards=True&action=activate&card_id={{ card.id }}&last4={{ card.last4 }}&expiryMonth={{ card.expiryMonth }}&expiryYear={{ card.expiryYear }}" >Activate</a>
+                                                {% else %}
+                                                  {{ card.cardStatus }}
+                                                {% endif %}
+
+                                            </li>
+                                            <hr>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                    <p>No cards available.</p>
+                                {% endif %}
+
+                            </div>
+                          </div>
+                        <HR>
+            {% else %}
+                User does not have a SolidFi link.
+            {% endif %}
+    {% else %}
+        <a href="{% url 'login' %}">Sign in</a> or <a href="{% url 'add_user' %}">create an account</a>
+    {% endif %}
+</div>
+{% endblock %}

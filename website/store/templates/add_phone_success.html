@@ -1,0 +1,53 @@
+<html>
+  {% load static %}
+<head>
+
+<title>Motoverse</title>
+<meta name="description" content="Meme Genesis is a website that provides a collection of the latest and most popular memes on the internet. Our website is updated daily with new memes, and we have a community section where users can submit their own memes. Join us to stay up-to-date with the funniest memes on the web!">
+<meta name="keywords" content="meme, memes, funny memes, internet memes, viral memes, popular memes, meme collection, meme community, submit memes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link href="/home/static/css/style_add.css" rel="stylesheet">
+
+</head>
+<body >
+
+
+  <form action="/home/add_user/" method="post" class="needs-validation" novalidate>
+
+  <div class="container mt-5 pt-5 custom-container">
+      {% csrf_token %}
+      <div class="centered-image">
+            <img src="/home/static/images/blue_check.png" alt="Blue Check" class="img-fluid">
+      </div>
+      <h3>User Login Created</h3>
+      <input type="hidden" class="form-control" name="phone" id="phone" value="{{phone}}" required>
+      <input type="hidden" class="form-control" name="code" id="code" value="{{code}}" required>
+      <p>Now that your phone is verified would you like to create a personal account</p>
+  </div>
+
+  <div class="fixed-bottom text-center pb-3">
+    <button class="custom-button">Next</button>
+  </div>
+
+  </form>
+
+
+
+</body>
+<script>
+document.addEventListener('deviceready', function() {
+    Keyboard.shrinkView(true)
+    window.addEventListener('keyboardDidShow', function () {
+      document.activeElement.scrollIntoView()
+    })
+    // Your Cordova-specific code here
+}, false);
+</script>
+</html>

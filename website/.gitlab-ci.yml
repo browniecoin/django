@@ -1,0 +1,44 @@
+image: python:3.9
+
+stages:
+  - build
+  - deploy
+
+before_script:
+  - apt-get update -qy
+  - apt-get install -y zip
+  - pip install awscli
+  - mkdir /tmp/log
+  - chmod 755 /tmp/log
+  - pip install django
+  - pip install -r requirements.txt
+
+build:
+  stage: build
+  script:
+    - pip install -r requirements.txt
+    - export D_SECRET_KEY='test'
+    - python manage.py collectstatic --noinput
+    - zip -r website.zip .
+  artifacts:
+    paths:
+    - website.zip
+
+
+deploy:
+  stage: deploy
+  script:
+    - aws configure set access_key $AWS_ACCESS_KEY_ID
+    - aws configure set secret_access $AWS_SECRET_ACCESS_KEY
+    - aws configure set region $AWS_DEFAULT_REGION
+    - aws iam get-user --user-name gitlab_deployer
+    - aws iam list-users
+    - aws s3 cp website.zip s3://modernfarms/website.zip
+    - echo $CI_COMMIT_TAG
+    - echo $CI_COMMIT_SHA
+    - aws elasticbeanstalk create-application-version --application-name "website" --version-label "v$CI_COMMIT_SHA" --source-bundle S3Bucket="modernfarms",S3Key="website.zip"
+    - aws elasticbeanstalk update-environment --environment-name "production" --version-label "v$CI_COMMIT_SHA"
+  only:
+    - dev
+  environment:
+    name: production

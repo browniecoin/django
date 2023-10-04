@@ -1,0 +1,83 @@
+{% extends 'base_home.html' %}
+
+
+
+{% block content %}
+<!--
+<div style="display: flex; align-items: center;">
+<input class="form-control mr-sm-2" type="search" placeholder="..." aria-label="Search" id="search_query" name="search_query"  >
+<button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="submitForm()" >Ask</button>
+</div>
+<HR>
+<div  id="askResponse" id="askResponse" >
+</div>
+-->
+
+<div class="content mt-1 dark-container">
+    <div class="col-12">
+      <div class="card text-center dark-container">
+        <div class="card-body">
+
+          <a href="/" ><img src="/home/static/images/browniecoins.org.logo.gif" class="img-fluid"  /></a>
+
+          <div class="row mt-3 ">
+            <div class="col">
+
+              <form  action="/home/login/" class="user" method="POST">
+                  {% csrf_token %}
+                      <div class="row justify-content-center">
+                          <div class="col-12">
+                              <div class="form-group">
+                                  <input type="text" class="form-control form-control-user" id="username" name="username" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                              </div>
+                              <div class="form-group">
+                                  <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password">
+                              </div>
+                              <!--
+                              <div class="form-group">
+                                  <div class="custom-control custom-checkbox small">
+                                      <input type="checkbox" class="custom-control-input" id="customCheck">
+                                      <label class="custom-control-label" for="customCheck">Remember Me</label>
+                                  </div>
+                              </div>
+                              -->
+                              <button type="submit" href="index.html" class="btn btn-primary btn-user btn-block">
+                                  Login
+                              </button>
+                          </div>
+                      </div>
+
+              </form>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+              <a href="/forgot_password/" >Forgot Password</a>
+            </div>
+          </div>
+          <div class="row mt-5">
+            <div class="col">
+              <p class="text-left">
+              <a href="/home/static/wallet/index.html" >Brownie Coin</a> is a revolutionary software product that seamlessly combines the capabilities of AI, the security of blockchain, and the reliability of traditional Web2 infrastructure. It paves the way for a secure, forward-thinking digital experience, redefining the boundaries of what's possible in the tech world. Welcome to the future with Brownie Coin.
+              </p>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+              <small>
+               Brownie Coin is developed using the Python programming language, harnessing its versatility and power to deliver a seamless fusion of AI, blockchain technology, and traditional Web2 infrastructure. It's the future of tech, crafted with Python precision. Welcome to the future with Brownie Coin.
+              </small>
+            </div>
+          </div>
+
+            <div class="row mt-5">
+              <div class="col">
+                Don't have an accout? <a href="/home/add_phone/" >Sign Up</a>
+              </div>
+            </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+{% endblock %}

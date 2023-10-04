@@ -1,0 +1,15 @@
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <div class="container my-5">
+        <h1>Your Cart</h1>
+        <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+        <button type="submit">Save</button>
+        </form>
+        <HR>
+        <a href="/checkout/confirm/">Checkout Confirm</a>
+        <HR>
+    </div>
+    {% endblock %}

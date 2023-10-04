@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my_5">
+  <a href="/my_profile/" >MY FI PROFILE</a>
+  <HR>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <HR>
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+  </form>
+  <BR><BR><BR>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    {% if user.is_authenticated %}
+          <h3><a  href="/edit_profile">{{ user.first_name }} {{ user.last_name }}</a> </h3>
+          <HR>
+            {% if user.solidfi %}
+                <a href="/my_profile/">{{user.solidfi}}</a>
+                <HR>
+                  <a href="/account_detail_statements/" >Statements</a>
+                <HR>
+                  <div class="container">
+                      <h1 class="mb-4">Account Statement</h1>
+                      <p>Month {{month}} Year {{year}}</p>
+
+                      <p>Account ID: <a href="/account_detail/?account_id={{ statement.accountId }}">{{ statement.accountId }}</a></p>
+                      <p>Account Number: {{ statement.accountNumber }}</p>
+                      <!-- Add more fields as needed -->
+
+                      <h2>Transactions</h2>
+                      <ul>
+                          {% for transaction in statement.transactions %}
+                          <li>
+                              Transaction ID: {{ transaction.id }}<br>
+                              Transaction Type: {{ transaction.txnType }}<br>
+                              <strong>Title:</strong> {{ transaction.title }}<br>
+                              <strong>Amount:</strong> {{ transaction.amount }}<br>
+                              <!-- Add more transaction fields as needed -->
+                          </li>
+                          {% endfor %}
+                      </ul>
+
+                      <p>Total Credit: {{ statement.totalCredit }}</p>
+                      <p>Total Debit: {{ statement.totalDebit }}</p>
+
+                  </div>
+                                          <HR>
+            {% else %}
+                User does not have a SolidFi link.
+            {% endif %}
+    {% else %}
+        <a href="{% url 'login' %}">Sign in</a> or <a href="{% url 'add_user' %}">create an account</a>
+    {% endif %}
+</div>
+{% endblock %}

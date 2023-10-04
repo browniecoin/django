@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+<h1>All Carts</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>External ID</th>
+      <th>Date Created</th>
+      <th>Date Modified</th>
+      <th>Checked Out</th>
+      <th>Paid</th>
+      <th>Paid ID</th>
+      <th>User</th>
+      <th>Billing Address</th>
+      <th>Shipping Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for cart in carts %}
+      <tr>
+        <td><a href="{% url 'view_cart_details' cart.id %}">{{ cart.id }}</a></td>
+        <td>{{ cart.external_id }}</td>
+        <td>{{ cart.date_created }}</td>
+        <td>{{ cart.date_modified }}</td>
+        <td>{{ cart.checked_out }}</td>
+        <td>{{ cart.paid }}</td>
+        <td>{{ cart.paid_transaction_id }}</td>        
+        <td>{{ cart.checked_out }}</td>
+        <td>
+          {% if cart.user %}
+                {{ cart.user.username }} <BR>
+                {{ cart.user.email }} <BR>
+                {{ cart.user.first_name }} {{ cart.user.last_name }} <BR>
+                {{ cart.user.company_name }}
+          {% endif %}
+        </td>
+        <td>
+          {{ cart.billing_address_line1 }}<br>
+          {{ cart.billing_address_line2 }}<br>
+          {{ cart.billing_city }}, {{ cart.billing_state }} {{ cart.billing_zipcode }}<br>
+          {{ cart.billing_country }}
+        </td>
+        <td>
+          {{ cart.shipping_address_line1 }}<br>
+          {{ cart.shipping_address_line2 }}<br>
+          {{ cart.shipping_city }}, {{ cart.shipping_state }} {{ cart.shipping_zipcode }}<br>
+          {{ cart.shipping_country }}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+</div>
+</section>
+{% endblock %}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+<head>
+
+<title>Brownie Coin</title>
+<meta name="description" content="Meme Genesis is a website that provides a collection of the latest and most popular memes on the internet. Our website is updated daily with new memes, and we have a community section where users can submit their own memes. Join us to stay up-to-date with the funniest memes on the web!">
+<meta name="keywords" content="meme, memes, funny memes, internet memes, viral memes, popular memes, meme collection, meme community, submit memes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link href="/static/css/style_add.css" rel="stylesheet">
+
+</head>
+<body >
+
+          <!-- Your page content goes here -->
+          {% block content %}{% endblock %}
+
+
+</body>
+<script>
+document.addEventListener('deviceready', function() {
+    Keyboard.shrinkView(true)
+    window.addEventListener('keyboardDidShow', function () {
+      document.activeElement.scrollIntoView()
+    })
+    // Your Cordova-specific code here
+}, false);
+</script>
+<script>
+// Function to create a cart ID and set it as a client-side cookie
+function createCartId() {
+  // Check if a cart ID cookie already exists
+  if (!getCookie("cartId")) {
+    // Generate a new cart ID
+    var cartId = generateId();
+    // Set the cart ID as a cookie
+    setCookie("cartId", cartId, 365);
+  }
+}
+
+// Function to generate a random ID
+function generateId() {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+}
+
+// Function to set a cookie
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+  var expires = "expires="+d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+// Function to get a cookie
+function getCookie(cname) {
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+
+// Call the createCartId function to create a new cart ID and set it as a cookie
+createCartId();
+</script>
+
+<script type="text/javascript">
+
+  function copyAddress() {
+    var billingAddressLine1 = document.getElementById("id_billing_address_line1").value;
+    var billingAddressLine2 = document.getElementById("id_billing_address_line2").value;
+    var billingCity = document.getElementById("id_billing_city").value;
+    var billingState = document.getElementById("id_billing_state").value;
+    var billingZipcode = document.getElementById("id_billing_zipcode").value;
+    var billingCountry = document.getElementById("id_billing_country").value;
+    document.getElementById("id_shipping_address_line1").value = billingAddressLine1;
+    document.getElementById("id_shipping_address_line2").value = billingAddressLine2;
+    document.getElementById("id_shipping_city").value = billingCity;
+    document.getElementById("id_shipping_state").value = billingState;
+    document.getElementById("id_shipping_zipcode").value = billingZipcode;
+    document.getElementById("id_shipping_country").value = billingCountry;
+
+  }
+  function searchbybrand() {
+    var select = document.getElementById("brand_list");
+    var search_key = select.options[select.selectedIndex].text;
+    var url = "/?search_key=" + encodeURIComponent(search_key);
+    window.location.href = url;
+  }
+</script>
+</html>

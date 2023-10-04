@@ -1,0 +1,49 @@
+/* styles.css */
+@font-face {
+  font-family: 'CustomFont'; /* Choose a name for your font */
+  src: url('/home/static/fonts/monday_donuts.woff2') format('woff2'),
+       url('/home/static/fonts/monday_donuts.woff') format('woff');
+  /* Add additional formats if available */
+}
+
+@font-face {
+  font-family: 'Sunset'; /* Choose a name for your font */
+  src: url('/home/static/fonts/coolvetica_rg.woff2') format('woff2'),
+       url('/home/static/fonts/coolvetica_rg.woff') format('woff');
+  /* Add additional formats if available */
+}
+/* Set the background color of the body to black */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Ensure the body takes up at least the full viewport height */
+    background-color: black;
+    position: relative; /* Make sure the body has a relative position */
+    font-family: 'CustomFont';
+}
+
+/* Set the color of links (both visited and unvisited) to white */
+a {
+    color: white;
+}
+
+/* Set the color of links when hovered over to a different color if desired */
+a:hover {
+    color: blue; /* Change this color as needed */
+}
+
+.content {
+    flex: 1;
+}
+.dark-container {
+  background-color: black;
+  color: white;
+  /* Add any other dark mode styles you want here */
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    text-align: center;
+}

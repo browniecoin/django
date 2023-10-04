@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+<h1>Upload CSV</h1>
+<form method="post" enctype="multipart/form-data" action="{% url 'upload_csv' %}">
+    {% csrf_token %}
+    <input type="file" name="file"><br><br>
+    <input type="submit" value="Upload">
+</form>
+</div>
+{% endblock %}

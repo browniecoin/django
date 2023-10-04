@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+<h1>{{ product.name }}</h1>
+<p>{{ product.description|safe }}</p>
+<p>Price: <span id="price">${{ product.price }}</span></p>
+
+<form onsubmit="addToCartAjax({{ product.id }}); return false;">
+    {% csrf_token %}
+    <input type="hidden" id="product_id" name="product_id" value="{{ product.id }}">
+    <input type="hidden" id="product_price" name="product_price" value="{{ product.price }}">
+
+    <label for="quantity">Quantity:</label>
+    <input type="number" name="quantity" id="quantity" min="1" value="1" onkeyup="calculatePrice(this.value, {{ product.id }})" >
+    <HR>
+    <input type="submit" value="Add to Cart">
+</form>
+<HR>
+
+<H3>Volume Discount</h3>
+<p>savings <span id="pricesavings">$0</span></p>
+<HR>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Price</th>
+        <th>Quantity Range</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in wholesale_prices %}
+        <tr>
+          <td>--</td>
+          <td>{{ item.qtyStart }} - {{ item.qtyEnd }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <div class="panel">
+  {% if product.product_image %}
+    <img  src="{{ product.product_image.url }}" alt="{{ product.name }}"  class="img-fluid" />
+  {% else %}
+    <img  src="../../static/img/missing.png" alt="{{ product.name }}" class="img-fluid"  />
+  {% endif %}
+  </div>
+</div>
+{% endblock %}

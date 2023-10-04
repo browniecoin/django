@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container my-5">
+<h3>List of Products</h3>
+
+<div class="container">
+  <h1>Product List</h1>
+  <div class="row">
+    {% for product in products %}
+    <div class="col-md-4">
+      <div class="card">
+        {% if product.product_image %}
+            <img src="{{ product.product_image.url }}" class="card-img-top" alt="{{ product.name }}">
+        {% else %}
+            <img class="card-img-top" src="../../static/img/missing.png" alt="{{ product.name }}" />
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ product.name }}</h5>
+          <p class="card-text">{{ product.description |safe }}</p>
+          <p class="card-text">${{ product.price }}</p>
+          <p class="card-text">${{ product.wholesale_price }}</p>
+          <p class="card-text">${{ product.your_price }}</p>
+          <p class="card-text">Quantity: {{ product.quantity }}</p>
+          <p class="card-text">Brand: {{ product.brand }}</p>
+          <p class="card-text">Category: {{ product.category }}</p>
+          <p class="card-text">Source: {{ product.source_upload }}</p>
+          <a href="{% url 'edit_product' product.id %}" class="btn btn-primary">Edit Product</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    <HR>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        {% if products.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ products.previous_page_number }}&search_key={{ request.GET.search_key }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+        {% endif %}
+
+        <li class="page-item active">
+          <span class="page-link">
+            Page {{ products.number }} of {{ products.paginator.num_pages }}
+          </span>
+        </li>
+
+        {% if products.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ products.next_page_number }}&search_key={{ request.GET.search_key }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        {% endif %}
+      </ul>
+    </nav>
+
+  </div>
+</div>
+
+{% endblock %}

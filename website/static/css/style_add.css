@@ -1,0 +1,144 @@
+/* styles.css */
+
+/* Set the background color of the body to black */
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background-color: white;
+    position: relative;
+    padding-top: 70px; /* Adjust this value to match the height of your navbar */
+    border: 1px solid white;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+    height: 50vh;
+    border: 1px solid white;
+}
+
+
+/* Set the color of links (both visited and unvisited) to white */
+a {
+    color: black;
+}
+
+/* Set the color of links when hovered over to a different color if desired */
+a:hover {
+    color: blue; /* Change this color as needed */
+}
+
+.navbar-with-border {
+  border-bottom: 2px solid black;
+}
+
+.content {
+}
+.dark-container {
+  background-color: white;
+  color: black;
+  /* Add any other dark mode styles you want here */
+}
+.form-group {
+    margin-top: 20px;
+}
+
+.form-control {
+    width: 100%;
+}
+
+.btn-container {
+    text-align: center;
+}
+
+.btn-primary {
+    margin-top: 20px;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    text-align: center;
+    border: 1px solid white;
+}
+.custom-container {
+  margin-top: 8rem; /* Adjust the value as needed */
+  width: 100%;
+}
+.custom-button {
+    width: 80%; /* 100% - 10% margin on each side */
+    margin: 0 10%;
+    margin-bottom: 50px;
+    align: center;
+    background-color: black;
+    color: white;
+    border: none; /* Remove default button border */
+    padding: 25px; /* Add padding for button content */
+    cursor: pointer; /* Add pointer cursor for better UX */
+}
+.centered-image {
+    max-width: 50%;
+    text-align: center;
+}
+
+.centered-image img {
+    max-width: 100%;
+    height: auto;
+}
+/* Hide the default checkbox */
+.checkbox {
+    display: none;
+}
+
+/* Style for the slider container */
+.slider {
+    width: 60px;
+    height: 30px;
+    background-color: #ccc;
+    border-radius: 30px; /* Make it round */
+    position: relative;
+    cursor: pointer;
+}
+
+/* Style for the slider handle (circle) */
+.slider::before {
+    content: "";
+    width: 30px;
+    height: 30px;
+    background-color: #2196F3;
+    border-radius: 50%; /* Make it round */
+    position: absolute;
+    transition: 0.4s;
+    top: 0;
+    left: 0;
+}
+
+/* When the checkbox is checked, move the handle to the right */
+.checkbox:checked + .slider::before {
+    left: 30px;
+    background-color: #2196F3; /* Change to blue */
+}
+
+.after-two-off {
+    display: none;
+}
+.after-two-on {
+}
+.custom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: left;
+    margin-bottom: 10px;
+}
+
+.custom-row .link {
+    margin-right: auto; /* Push the link to the left */
+}
+
+.custom-row .arrow {
+    margin-left: auto; /* Push the arrow to the right */
+}

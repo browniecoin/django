@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container my-5">
+<h3>List of Brands</h3>
+
+{% for brand in brands %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ brand.name }}</h3>
+    </div>
+    <div class="panel-body">
+        {% if brand.image %}
+            <img src="{{ brand.image.url }}" alt="{{ brand.name }}" class="img-fluid">
+        {% else %}
+          <img class="card-img-top" src="../../static/img/missing.png" alt="{{ product.name }}" />
+        {% endif %}
+        <p>{{ brand.description }}</p>
+        <p>Website: <a href="{{ brand.website }}">{{ brand.website }}</a></p>
+    </div>
+    <div class="panel-footer">
+        <a href="{% url 'delete_brand' brand.pk %}" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,65 @@
+
+<div class="products-grid row style_grid" id="index_products" name="index_products" >
+
+<div class="d-flex flex-wrap">
+  {% for product in products %}
+    <div class="col-md-6 col-lg-4 mb-4">
+      <div class="card">
+        <div class="card-body">
+
+
+                             {% if product.product_image %}
+                                {% load filters %}
+                                <img class="card-img-top" src="{{ product.product_image.url|default:"default.png"|replace:"product/,product/tn/" }}">
+                             {% else %}
+                               <img  class="card-img-top" src="../../static/img/missing.png" alt="{{ product.name }}" />
+                             {% endif %}
+
+
+          <h5 class="card-title mt-3"> {{ product.name|truncatechars:10 }}</h5>
+          <HR>
+            $ {{ product.price }}
+          <HR>
+
+                <button class="btn-cart"
+                        title="Add to Cart" onclick="javascript:addToCartAjax({{ product.id }})" >
+                    <i class="fa fa-shopping-cart"></i>
+                    <span>Add to Cart</span>
+                </button>
+          <HR>
+
+                <a class="sns-btn-quickview qv_btn"
+                   href="{% url 'view_product' product.id %}" >
+                    <span>Details</span>
+                </a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+ </div>
+ 
+<h3 class="bt-more">
+    <ul class="pagination">
+      {% if products.has_previous %}
+          <li class="page-item">
+              <a class="page-link" href="#" onclick="event.preventDefault(); getIndex_Products({{ products.previous_page_number }}, '{{ request.GET.search_key|default:'' }}')" aria-label="Next">
+                  <span class="page-link">Previous</span>
+              </a>
+          </li>
+      {% endif %}
+      <li class="page-item active">
+        <span class="page-link">
+          Page {{ products.number }} of {{ products.paginator.num_pages }}
+        </span>
+      </li>
+      {% if products.has_next %}
+          <li class="page-item">
+              <a class="page-link" href="#home" onclick="getIndex_Products({{ products.next_page_number }}, '{{ request.GET.search_key|default:'' }}')" aria-label="Next">
+                  <span class="page-link">Next</span>
+              </a>
+          </li>
+      {% endif %}
+    </ul>
+</h3>

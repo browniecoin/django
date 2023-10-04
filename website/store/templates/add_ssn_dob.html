@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+<head>
+
+<title>Motoverse</title>
+<meta name="description" content="Meme Genesis is a website that provides a collection of the latest and most popular memes on the internet. Our website is updated daily with new memes, and we have a community section where users can submit their own memes. Join us to stay up-to-date with the funniest memes on the web!">
+<meta name="keywords" content="meme, memes, funny memes, internet memes, viral memes, popular memes, meme collection, meme community, submit memes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+<link href="/static/css/style_add.css" rel="stylesheet">
+
+</head>
+<body >
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top navbar-with-border mt-5">
+    <!-- Your navigation bar content -->
+    <a class="navbar-brand" href="/"><i class="fas fa-arrow-left"></i> Enter&nbspmobile&nbspnumber</a>
+  </nav>
+
+  <form action="/add_ssn_dob/" method="post" class="needs-validation" novalidate>
+
+  <div class="container mt-5 pt-5 custom-container">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="mobile_number">Date of Birth</label>
+        <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth" value="" required>
+      </div>
+      <div class="form-group">
+        <label for="mobile_number">Social Security</label>
+        <input type="text" class="form-control" name="idNumber" id="idNumber" value="" required>
+      </div>
+  </div>
+
+  <div class="fixed-bottom text-center pb-3">
+    <button class="custom-button">Next</button>
+  </div>
+
+  </form>
+
+
+
+</body>
+<script>
+document.addEventListener('deviceready', function() {
+    Keyboard.shrinkView(true)
+    window.addEventListener('keyboardDidShow', function () {
+      document.activeElement.scrollIntoView()
+    })
+    // Your Cordova-specific code here
+}, false);
+</script>
+</html>

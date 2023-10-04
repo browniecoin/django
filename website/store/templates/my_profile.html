@@ -1,0 +1,205 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-5">
+    {% if user.is_authenticated %}
+          <h3><a  href="/edit_profile">{{ user.first_name }} {{ user.last_name }}</a> </h3>
+          <div class="container mt-4">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-toggle="tab" href="#tab1">Accounts</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#tab2">Profile</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-toggle="tab" href="#tab3">KYC</a>
+    </li>
+    <li class="nav-item">
+      <a href="/my_profile" class="nav-link" ><i class="fas fa-sync-alt fa-lg"></i></a>
+    </li>
+
+  </ul>
+
+  <div class="tab-content">
+    <div id="tab1" class="tab-pane fade show active">
+        <HR>
+        {% if kyc_is_approved == True %}
+          <form action="/add_bank_account/" method="post">
+              {% csrf_token %}
+              {{ form.user.as_hidden }} {# Include a hidden input field for the user #}
+              <div class="form-group">
+                  <label for="label">Account Label:</label>
+                  <input type="text" class="form-control" id="label" name="label" maxlength="20" required value="" placeholder="Primary">
+              </div>
+              <div class="form-group  mt-3">
+                <label for="account_type">Select Account Type:</label>
+                <select class="form-control" id="account_type" name="account_type">
+                  <option value="businessChecking">Business Checking</option>
+                  <option value="personalChecking" selected >Personal Checking</option>
+                  <option value="cardAccount">Card Account</option>
+                  <option value="clearingAccount">Clearing Account</option>
+                  <option value="fallbackAccount">Fallback Account</option>
+                  <option value="fundingAccount">Funding Account</option>
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary mt-3">Create Account</button>
+          </form>
+
+          <HR>
+            <ul>
+              {% if accounts %}
+                {% for account in accounts %}
+                    <li>
+                        <strong>Account ID:</strong>
+                        <a href="/account_detail/?account_id={{ account.id }}">
+                             {{ account.id }}
+                        </a><br>
+                        <strong>Label:</strong> {{ account.label }}<br>
+                        <strong>Type:</strong> {{ account.type }}<br>
+                        <strong>Status:</strong> {{ account.status }}<br>
+                        <strong>Available Balance:</strong> {{ account.availableBalance }}<br>
+                    </li>
+
+                {% endfor %}
+              {% endif %}
+            </ul>
+        {% endif %}
+    </div>
+    <div id="tab2" class="tab-pane fade">
+      <HR>
+          <form action="/my_profile/" method="post">
+              {% csrf_token %}
+              {{ form.user.as_hidden }} {# Include a hidden input field for the user #}
+              <div class="form-group">
+                  <label for="firstName">Legal First Name:</label>
+                  <input type="text" class="form-control" id="firstName" name="firstName" maxlength="100" required value="{{ user.first_name }}">
+              </div>
+
+              <div class="form-group">
+                  <label for="middleName">Legal Middle Name:</label>
+                  <input type="text" class="form-control" id="middleName" name="middleName" maxlength="100" value="{{ user.m_name }}">
+              </div>
+
+              <div class="form-group">
+                  <label for="lastName">Legal Last Name:</label>
+                  <input type="text" class="form-control" id="lastName" name="lastName" maxlength="100" required value="{{ user.last_name }}">
+              </div>
+
+              <div class="form-group">
+                  <label for="phone">Mobile Phone:</label>
+                  <input type="text" class="form-control" id="phone" name="phone" maxlength="16" required value="{{ user.phone }}">
+              </div>
+
+              <div class="form-group">
+                  <label for="email">Email:</label>
+                  <input type="email" class="form-control" id="email" name="email" maxlength="100" value="{{ user.email }}" readonly>
+              </div>
+
+              <div class="form-group">
+                  <label for="dateOfBirth">Date of Birth:</label>
+                  <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required value="{{ user.dateOfBirth|date:'Y-m-d' }}">
+              </div>
+
+              <div class="form-group">
+                  <label for="idType">ID Type:</label>
+                  <select class="form-control" id="idType" name="idType" required>
+                      <option value="ssn">SSN</option>
+                      <option value="passport">Passport</option>
+                      <option value="otherId">Other ID</option>
+                  </select>
+              </div>
+
+              <div class="form-group">
+                  <label for="idNumber">ID Number:</label>
+                  <input type="text" class="form-control" id="idNumber" name="idNumber" minlength="9" maxlength="50" required value="{{ user.idNumber }}">
+              </div>
+              <div class="form-group">
+                  <label for="addressType">Address Type:</label>
+                  <select class="form-control" id="addressType" name="addressType" required>
+                      <option value="mailing">Mailing</option>
+                      <option value="billing">Billing</option>
+                      <option value="other">Other</option>
+                  </select>
+              </div>
+
+              <div class="form-group">
+                  <label for="line1">Address Line 1:</label>
+                  <input type="text" class="form-control" id="line1" name="line1" maxlength="100" required value="{{ user.billing_address_line1 }}">
+              </div>
+
+              <div class="form-group">
+                  <label for="line2">Address Line 2:</label>
+                  <input type="text" class="form-control" id="line2" name="line2" maxlength="100" value="{{ user.billing_address_line2 }}">
+              </div>
+
+              <div class="form-group">
+                  <label for="city">City:</label>
+                  <input type="text" class="form-control" id="city" name="city" maxlength="100" required value="{{ user.billing_city }}">
+              </div>
+
+              <div class="form-group">
+                  <label for="state">State:</label>
+                  <input type="text" class="form-control" id="state" name="state" maxlength="100" required value="{{ user.billing_state }}">
+              </div>
+
+              <div class="form-group">
+                  <label for="country">Country:</label>
+                  <input type="text" class="form-control" id="country" name="country" maxlength="100" required value="{{ user.billing_country }}">
+              </div>
+
+              <div class="form-group">
+                  <label for="postalCode">Postal Code:</label>
+                  <input type="text" class="form-control" id="postalCode" name="postalCode" maxlength="16" required value="{{ user.billing_zipcode }}">
+              </div>
+              <button type="submit" class="btn btn-primary">Save</button>
+          </form>
+
+          {% if saved %}
+          <div class="alert alert-success mt-3">
+              Data has been saved successfully!
+              <!-- Display the saved data here if needed -->
+          </div>
+          {% endif %}
+    </div>
+    <div id="tab3" class="tab-pane fade">
+      <HR>
+        {% if user.solidfi %}
+            {{user.solidfi}}
+            <HR>
+
+            {% if user.idv_value %}
+              {% if user.idv_value == "notStarted" %}
+                  IDV: <a href="/add_idv/" >Start</a>
+                  <HR>
+              {% else %}
+                  IDV: {{user.idv_value}}
+                  <HR>
+                  {% if user.idv_value == "approved" and kyc_is_approved == False %}
+
+                    KYC: <a href="/add_kyc/" >Start</a>
+                    <HR>
+                  {% endif %}
+
+                   Address: {{user.kyc_address}} <BR>
+                   DOB: {{user.kyc_dateOfBirth}} <BR>
+                   Fraud: {{user.kyc_fraud}} <BR>
+                   Bank: {{user.kyc_bank}} <BR>
+              {% endif %}
+            {% else %}
+                UNKNOWN
+            {% endif %}
+        {% else %}
+            User does not have a SolidFi link.
+        {% endif %}
+    </div>
+  </div>
+</div>
+
+
+
+    {% else %}
+        <a href="{% url 'login' %}">Sign in</a> or <a href="{% url 'add_user' %}">create an account</a>
+    {% endif %}
+</div>
+{% endblock %}

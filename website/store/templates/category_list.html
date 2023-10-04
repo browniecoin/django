@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="container my-5">
+<h3>List of Category</h3>
+
+{% for category in categories %}
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ category.name }}</h3>
+    </div>
+    <div class="panel-body">
+        {% if category.image %}
+            <img src="{{ category.image.url }}" alt="{{ category.name }}" class="img-fluid">
+        {% else %}
+          <img class="card-img-top" src="../../static/img/missing.png" alt="{{ product.name }}" />
+        {% endif %}
+        <p>{{ category.description }}</p>
+    </div>
+    <div class="panel-footer">
+        <a href="{% url 'delete_category' category.pk %}" class="btn btn-danger">Delete</a>
+    </div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}

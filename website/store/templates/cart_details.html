@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container my-5">
+    <h1>Order Info</h1>
+    <div class="container my-5">
+        <div class="row mb-3">
+            <div class="col-sm-3">
+                <p>Order ID:</p>
+            </div>
+            <div class="col-sm-9">
+                <p>{{ cart.id }}</p>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3">
+                <p>External ID:</p>
+            </div>
+            <div class="col-sm-9">
+                <p>{{ cart.external_id }}</p>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3">
+                <p>Date Created:</p>
+            </div>
+            <div class="col-sm-9">
+                <p>{{ cart.date_created }}</p>
+            </div>
+        </div>
+        <!-- Add HTML code to display other fields -->
+    </div>
+    <div class="container my-5">
+      <h2>User Details</h2>
+      <p>Username: {{user.username}}</p>
+      <p>Email: {{user.email}}</p>
+      <p>First Name: {{user.first_name}}</p>
+      <p>Last Name: {{user.last_name}}</p>
+      <p>Company Name: {{user.company_name}}</p>
+      <p>Is Active: {{user.is_active}}</p>
+      <p>Is Staff: {{user.is_staff}}</p>
+      <p>Is Superuser: {{user.is_superuser}}</p>
+      <p>Company Phone: {{user.company_phone}}</p>
+      <p>Company Email Address: {{user.company_email_address}}</p>
+      <p>Date Joined: {{user.date_joined}}</p>
+      <h3>User Billing Address</h3>
+      <p>Address Line 1: {{user.billing_address_line1}}</p>
+      <p>Address Line 2: {{user.billing_address_line2}}</p>
+      <p>City: {{user.billing_city}}</p>
+      <p>State: {{user.billing_state}}</p>
+      <p>Zipcode: {{user.billing_zipcode}}</p>
+      <p>Country: {{user.billing_country}}</p>
+      <h3>User Shipping Address</h3>
+      <p>Address Line 1: {{user.shipping_address_line1}}</p>
+      <p>Address Line 2: {{user.shipping_address_line2}}</p>
+      <p>City: {{user.shipping_city}}</p>
+      <p>State: {{user.shipping_state}}</p>
+      <p>Zipcode: {{user.shipping_zipcode}}</p>
+      <p>Country: {{user.shipping_country}}</p>
+    </div>
+    <div class="container my-5">
+        <h3>Order Shipping Details</h3>
+        <p>Address Line 1: {{ cart.shipping_address_line1 }}</p>
+        <p>Address Line 2: {{ cart.shipping_address_line2 }}</p>
+        <p>City: {{ cart.shipping_city }}</p>
+        <p>State: {{ cart.shipping_state }}</p>
+        <p>Zipcode: {{ cart.shipping_zipcode }}</p>
+        <p>Country: {{ cart.shipping_country }}</p>
+        <h3>Order Billing Details</h3>
+        <p>Address Line 1: {{ cart.billing_address_line1 }}</p>
+        <p>Address Line 2: {{ cart.billing_address_line2 }}</p>
+        <p>City: {{ cart.billing_city }}</p>
+        <p>State: {{ cart.billing_state }}</p>
+        <p>Zipcode: {{ cart.billing_zipcode }}</p>
+        <p>Country: {{ cart.billing_country }}</p>
+    </div>
+{% for product in products %}
+  <div class="row mb-3">
+    <div class="col-sm-3">
+      <p>{{ product.product.name }}</p>
+    </div>
+    <div class="col-sm-3">
+      <p>{{ product.product.price }}</p>
+    </div>
+    <div class="col-sm-3">
+      <p>{{ product.quantity }}</p>
+    </div>
+    <div class="col-sm-3">
+      <p>{{ product.line_item_total }}</p>
+    </div>
+  </div>
+{% endfor %}
+
+<div class="row">
+  <div class="col-sm-12">
+    <p>Total: {{ total }}</p>
+  </div>
+</div>
+
+{% endblock %}
