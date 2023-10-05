@@ -26,25 +26,25 @@
 
   <form action="/home/my_profile/" method="post" class="needs-validation" novalidate>
 
-  <div class="container mt-5 pt-5 custom-container">
+  <div class="container mt-1 pt-1 custom-container">
       {% csrf_token %}
-      <div class="form-group">
+      <div class="form-group mt-1">
         <label for="mobile_number">Brownie Coin Address</label>
         <input type="text" class="form-control" name="brownie_coin_address" id="brownie_coin_address" value="{{user.brownie_coin_address}}" required>
       </div>
-      <div class="form-group">
+      <div class="form-group mt-1">
         <label for="mobile_number">Enter X Handle</label>
         <input type="text" class="form-control" name="x_handle" id="x_handle" value="{{user.x_handle}}" required>
       </div>
-      <div class="form-group">
+      <div class="form-group mt-1">
         <label for="mobile_number">Enter TG Handle</label>
         <input type="text" class="form-control" name="tg_handle" id="tg_handle" value="{{user.tg_handle}}" required>
       </div>
-      <div class="form-group">
+      <div class="form-group mt-1">
         <label for="mobile_number">Enter IG Handle</label>
         <input type="text" class="form-control" name="ig_handle" id="ig_handle" value="{{user.ig_handle}}" required>
       </div>
-      <div class="form-group">
+      <div class="form-group mt-1">
         <label for="wallet_address">Wallet Address</label>
         <input type="text" class="form-control" name="wallet_address" id="wallet_address" readonly value="{{user.wallet_address}}" required>
       </div>
