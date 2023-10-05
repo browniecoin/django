@@ -85,6 +85,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     x_handle = models.CharField(max_length=100, blank=True)
     tg_handle = models.CharField(max_length=100, blank=True)
     ig_handle = models.CharField(max_length=100, blank=True)
+    brownie_coin_address = models.CharField(max_length=100, blank=True)
 
 
     USERNAME_FIELD = 'username'

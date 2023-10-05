@@ -656,6 +656,7 @@ def my_profile(request):
         x_handle = request.POST.get('x_handle','')
         tg_handle = request.POST.get('tg_handle','')
         ig_handle = request.POST.get('ig_handle','')
+        brownie_coin_address = request.POST.get('brownie_coin_address','')
 
 
 
@@ -663,6 +664,7 @@ def my_profile(request):
             user.x_handle = x_handle
             user.tg_handle = tg_handle
             user.ig_handle = ig_handle
+            user.brownie_coin_address = brownie_coin_address
             user.save()
         except Exception as e:
             print("Error saving user:", e)
