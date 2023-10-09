@@ -21,6 +21,10 @@ app.conf.beat_schedule = {
         'task': 'store.tasks.my_periodic_task_balance',
         'schedule': crontab(minute=15, hour='2'),  # Run once an hour at the start of the hour
     },
+    'my-periodic-coin-stats-task': {
+        'task': 'store.tasks.my_periodic_coin_stats_task',
+        'schedule': crontab(minute=15, hour='2'),  # Run once an hour at the start of the hour
+    },
 }
 
 app.autodiscover_tasks()

@@ -5,7 +5,7 @@ from django.db.models import Q
 import json
 import os
 
-from .models import UserManager, BankAccount, PhoneVerification, TokenRecord, TokenBalance
+from .models import UserManager, BankAccount, PhoneVerification, TokenRecord, TokenBalance, CoinStats
 from .forms import UserCreationForm, EditProfileForm
 from web3 import Web3
 #celery_app = Celery('store')
@@ -156,3 +156,56 @@ def my_periodic_task():
 
 
     pass
+
+
+@shared_task
+def my_periodic_coin_stats_task():
+
+    coin_supply = 0
+    blocks_mined = 0
+    current_hash_power = 0.0
+
+    url = "https://api.browniecoins.org/getdifficulty.jsp"
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            print("Response:")
+            print(response.text)
+            current_hash_power = float(response.text)
+        else:
+            print(f"Request failed with status code: {response.status_code}")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
+    url = "https://api.browniecoins.org/getblockcount.jsp"
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            print("Response:")
+            print(response.text)
+            blocks_mined = int(response.text)
+        else:
+            print(f"Request failed with status code: {response.status_code}")
+    except Exception as e:
+        print(f"An error occurred: {str(e)}")
+
+
+    url = 'https://api.browniecoins.org/gettxoutsetinfo.jsp'
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            coin_supply = int(data['total_amount'])
+        else:
+            print('HTTP Request Failed with Status Code:', response.status_code)
+    except requests.exceptions.RequestException as e:
+        print('Error fetching data:', e)
+
+    coin_stats = CoinStats(
+        coin_supply=coin_supply,
+        blocks_mined=blocks_mined,
+        current_hash_power=current_hash_power,
+    )
+    coin_stats.save()
+
+    print("Scheduled Task Executed SAVED")

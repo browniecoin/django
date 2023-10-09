@@ -136,3 +136,12 @@ class TokenBalance(models.Model):
 
     def __str__(self):
         return f"Token {self.contract_address_nft} - {self.token_owner} - {self.token_count} - {self.balance} - {self.created_at}"
+
+class CoinStats(models.Model):
+    coin_supply = models.IntegerField()
+    blocks_mined = models.IntegerField()
+    current_hash_power = models.FloatField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"CoinStats - Timestamp: {self.timestamp}"
