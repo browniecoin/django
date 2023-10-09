@@ -5,6 +5,8 @@ from django.db.models import Q
 import json
 import os
 
+import requests
+
 from .models import UserManager, BankAccount, PhoneVerification, TokenRecord, TokenBalance, CoinStats
 from .forms import UserCreationForm, EditProfileForm
 from web3 import Web3
