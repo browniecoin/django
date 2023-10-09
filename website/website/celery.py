@@ -23,7 +23,7 @@ app.conf.beat_schedule = {
     },
     'my-periodic-coin-stats-task': {
         'task': 'store.tasks.my_periodic_coin_stats_task',
-        'schedule': crontab(minute=15, hour='2'),  # Run once an hour at the start of the hour
+        'schedule': crontab(minute='*/3'),
     },
 }
 
