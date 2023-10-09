@@ -61,6 +61,8 @@ import time
 import eth_keys.exceptions
 from collections import defaultdict
 
+from django.core import serializers
+
 register = template.Library()
 
 def verify_signed_message(message, signature, public_address):
