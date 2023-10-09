@@ -39,7 +39,7 @@ from django.db.models import Q
 
 import json
 
-from .models import User, UserManager, BankAccount, PhoneVerification, TokenRecord, TokenBalance
+from .models import User, UserManager, BankAccount, PhoneVerification, TokenRecord, TokenBalance, CoinStats
 from .forms import UserCreationForm, EditProfileForm
 
 import stripe
