@@ -106,9 +106,10 @@ def index(request):
 
     return render(request, 'index.html', context)
 
-
-
-
+def coin_stats(request):
+    coin_stats_data = CoinStats.objects.all()
+    data = serializers.serialize('json', coin_stats_data)
+    return JsonResponse(data, safe=False)
 
 def success_view(request):
     return render(request, 'success.html')

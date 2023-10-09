@@ -70,6 +70,7 @@ urlpatterns = [
     path('home/add_wallet/', views.add_wallet, name='add_wallet'),
     path('home/get_wallet_history/', views.get_wallet_history, name='get_wallet_history'),
     path('home/get_leaders/', views.get_leaders, name='get_leaders'),
+    path('home/coin_stats/', views.coin_stats, name='coin_stats'),
 
 
 ]
