@@ -261,6 +261,7 @@ CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:8000',  # Add the origin of your Cordova app
+    'https://api.browniecoins.org',  # Add the origin of your Cordova app
 ]
 CORS_ALLOW_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS']
 CORS_ALLOW_HEADERS = [
