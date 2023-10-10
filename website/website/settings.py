@@ -65,7 +65,7 @@ SOCIAL_AUTH_PIPELINE = (
 DEBUG = True
 
 ALLOWED_HOSTS = ['www.browniecoins.org', 'browniecoins.org', 'localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['https://www.kafkacoineth.com', 'https://kafkacoineth.com']
+CSRF_TRUSTED_ORIGINS = ['https://api.browniecoins.org', 'https://www.kafkacoineth.com', 'https://kafkacoineth.com']
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
