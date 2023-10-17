@@ -108,10 +108,17 @@ def index(request):
 
     return render(request, 'index.html', context)
 
+
 def coin_stats(request):
-    coin_stats_data = CoinStats.objects.all()
+    # Get the last 200 CoinStats objects
+    coin_stats_data = CoinStats.objects.order_by('-timestamp')[:200]
+
+    # Serialize the data to JSON
     data = serializers.serialize('json', coin_stats_data)
+
+    # Return the JSON response
     return JsonResponse(data, safe=False)
+
 
 def success_view(request):
     return render(request, 'success.html')
