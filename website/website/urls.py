@@ -71,6 +71,7 @@ urlpatterns = [
     path('home/get_wallet_history/', views.get_wallet_history, name='get_wallet_history'),
     path('home/get_leaders/', views.get_leaders, name='get_leaders'),
     path('home/coin_stats/', views.coin_stats, name='coin_stats'),
+    path('home/generate_qr_codes/', views.generate_qr_codes, name='generate_qr_codes'),
 
 
 ]

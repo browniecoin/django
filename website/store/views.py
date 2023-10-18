@@ -62,6 +62,10 @@ import eth_keys.exceptions
 from collections import defaultdict
 
 from django.core import serializers
+import requests
+import qrcode
+from PIL import Image
+from io import BytesIO
 
 register = template.Library()
 
@@ -2798,3 +2802,69 @@ def pay_with_stripe(request):
         int(total * 100)
         context = {'total': total, 'total_in_cents': total_in_cents}
         return render(request, 'pay_with_stripe.html', context)
+
+def generate_qr_codes(request):
+    url = "https://api.browniecoins.org/getnewaddress.jsp"
+
+    try:
+        response = requests.get(url)
+        address = ""
+        privkey = ""
+
+        if response.status_code == 200:
+            address = response.text.strip()
+
+            # Create a QR code for the address
+            address_qr = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.constants.ERROR_CORRECT_L,
+                box_size=10,
+                border=4,
+            )
+            address_qr.add_data(address)
+            address_qr.make(fit=True)
+            address_qr_img = address_qr.make_image(fill_color="black", back_color="white")
+
+            url = "https://api.browniecoins.org/dumpprivkey.jsp?privkey=" + address
+            response = requests.get(url)
+
+            if response.status_code == 200:
+                privkey = response.text.strip()
+
+                # Create a QR code for the private key
+                privkey_qr = qrcode.QRCode(
+                    version=1,
+                    error_correction=qrcode.constants.ERROR_CORRECT_L,
+                    box_size=10,
+                    border=4,
+                )
+                privkey_qr.add_data(privkey)
+                privkey_qr.make(fit=True)
+                privkey_qr_img = privkey_qr.make_image(fill_color="black", back_color="white")
+
+                # Create a blank image to combine the QR codes side by side
+                combined_width = address_qr_img.size[0] + privkey_qr_img.size[0]
+                combined_height = max(address_qr_img.size[1], privkey_qr_img.size[1])
+                combined_image = Image.new("RGB", (combined_width, combined_height), "white")
+
+                # Paste the address QR code on the left and private key QR code on the right
+                combined_image.paste(address_qr_img, (0, 0))
+                combined_image.paste(privkey_qr_img, (address_qr_img.size[0], 0))
+
+                # Convert the combined image to bytes
+                output_buffer = BytesIO()
+                combined_image.save(output_buffer, format="PNG")
+                image_data = output_buffer.getvalue()
+
+                # Respond with the image as a URL
+                response = HttpResponse(image_data, content_type="image/png")
+                return response
+
+            else:
+                return HttpResponseBadRequest(f"Request failed with status code: {response.status_code}")
+
+        else:
+            return HttpResponseBadRequest(f"Request failed with status code: {response.status_code}")
+
+    except requests.exceptions.RequestException as e:
+        return HttpResponseBadRequest(f"An error occurred: {e}")
