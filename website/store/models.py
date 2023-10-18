@@ -141,7 +141,8 @@ class CoinStats(models.Model):
     coin_supply = models.IntegerField()
     blocks_mined = models.IntegerField()
     current_hash_power = models.FloatField()
-    mininginfo = models.CharField(max_length=1000, null=True, blank=True)    
+    #mininginfo = models.FloatField(default=0.0)
+    #mininginfo = models.CharField(max_length=1000, null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

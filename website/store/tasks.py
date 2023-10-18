@@ -166,7 +166,7 @@ def my_periodic_coin_stats_task():
     coin_supply = 0
     blocks_mined = 0
     current_hash_power = 0.0
-    mininginfo = ""
+    mininginfo = 0.0
 
     url = "https://api.browniecoins.org/getmininginfo.jsp"
     try:
@@ -174,7 +174,7 @@ def my_periodic_coin_stats_task():
         if response.status_code == 200:
             print("Response:")
             print(response.text)
-            mininginfo =  response.text
+            mininginfo =  float(response.text)
         else:
             print(f"Request failed with status code: {response.status_code}")
     except Exception as e:
