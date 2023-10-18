@@ -168,7 +168,7 @@ def my_periodic_coin_stats_task():
     current_hash_power = 0.0
     mininginfo = ""
 
-    url = "https://api.browniecoins.org/mininginfo.jsp"
+    url = "https://api.browniecoins.org/getmininginfo.jsp"
     try:
         response = requests.get(url)
         if response.status_code == 200:

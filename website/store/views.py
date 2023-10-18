@@ -111,7 +111,7 @@ def index(request):
 
 def coin_stats(request):
     # Get the last 200 CoinStats objects
-    coin_stats_data = CoinStats.objects.order_by('-timestamp')[:200]
+    coin_stats_data = CoinStats.objects.order_by('-timestamp')[:100]
 
     # Serialize the data to JSON
     data = serializers.serialize('json', coin_stats_data)
