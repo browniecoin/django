@@ -401,7 +401,9 @@ def verify_email(request):
         #response = sg.send(message)
         #print(response.status_code, response.body, response.headers)
 
-        return render(request, 'add_email_code.html')
+        # UNCOMMENT FOR PRODUCTION
+        # code = ''
+        return render(request, 'add_email_code.html' , {'code': code})
     else :
         if user.email_verification_code == code :
             user.email_isVerified = True
@@ -457,7 +459,7 @@ def add_phone(request):
 
                 print(f"SMS sent {messageto} with message ID: {message.sid}")
 
-                return render(request, 'add_phone_code.html' , {'phone': phone})
+                return render(request, 'add_phone_code.html' , {'phone': phone, 'code': code})
             except Exception as e:
                 # Handle any exceptions that may occur during the save operation
                 # You can log the error or return an error message to the user
