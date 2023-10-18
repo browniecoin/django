@@ -72,7 +72,7 @@ urlpatterns = [
     path('home/get_leaders/', views.get_leaders, name='get_leaders'),
     path('home/coin_stats/', views.coin_stats, name='coin_stats'),
     path('home/generate_qr_codes/', views.generate_qr_codes, name='generate_qr_codes'),
-
+    path('home/get_brownie_note/', views.get_brownie_note, name='get_brownie_note'),
 
 ]
 

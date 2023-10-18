@@ -2868,3 +2868,40 @@ def generate_qr_codes(request):
 
     except requests.exceptions.RequestException as e:
         return HttpResponseBadRequest(f"An error occurred: {e}")
+
+def get_brownie_note(request):
+    # URLs of the images
+    url1 = "https://browniecoins.org/home/generate_qr_codes/"
+    url2 = "https://browniecoins.org/home/static/images/100.png"
+
+    # Download the images
+    response1 = requests.get(url2)
+    response2 = requests.get(url1)
+
+    if response1.status_code == 200 and response2.status_code == 200:
+        # Open and load the images using PIL
+        image1 = Image.open(BytesIO(response1.content))
+        image2 = Image.open(BytesIO(response2.content))
+
+        new_width = image2.width // 4
+        new_height = image2.height // 4
+
+        # Resize image2
+        image2 = image2.resize((new_width, new_height))
+
+        # Ensure image2 is smaller than image1
+        if image2.width < image1.width and image2.height < image1.height:
+            # Define the position to paste image2 onto image1
+            position = (25, 25)  # Adjust as needed
+
+            # Paste image2 onto image1
+            image1.paste(image2, position)
+
+            # Create an in-memory response
+            response = HttpResponse(content_type="image/png")
+            image1.save(response, "PNG")
+            return response
+        else:
+            return HttpResponse("Image 2 is not smaller than Image 1.")
+    else:
+        return HttpResponse("Failed to fetch one or both images. Check the URLs.")
