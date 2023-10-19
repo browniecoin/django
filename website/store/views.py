@@ -2874,8 +2874,8 @@ def get_magic_key_prize(request):
     total_points = 0  # Initialize total points to zero
 
     if tg_id is not None and tg_id != 'h':
-        # Query the MagicKey model to retrieve records where tg_id is not 'h' and order by current_block
-        magic_key_records = MagicKey.objects.filter(magic_key__ne='h', tg_id=tg_id).order_by('current_block')
+        # Query the MagicKey model to retrieve records where tg_id is not 'h' and magic_key is not equal to 'h', ordered by current_block
+        magic_key_records = MagicKey.objects.filter(tg_id=tg_id).exclude(magic_key='h').order_by('current_block')
 
         for record in magic_key_records:
             # Compare magic_key_guess with magic_key
