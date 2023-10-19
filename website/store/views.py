@@ -39,7 +39,7 @@ from django.db.models import Q
 
 import json
 
-from .models import User, UserManager, BankAccount, PhoneVerification, TokenRecord, TokenBalance, CoinStats, MagicKey
+from .models import User, UserManager, BankAccount, PhoneVerification, TokenRecord, TokenBalance, CoinStats, MagicKey, MagicPayment
 from .forms import UserCreationForm, EditProfileForm
 
 import stripe
@@ -2896,6 +2896,44 @@ def get_magic_key_prize(request):
     else:
         # Handle the case when tg_id is 'h' or not provided
         return HttpResponse('Invalid tg_id')
+
+def add_wallet(request):
+
+    tg_id = request.GET.get('tg_id')
+    wallet_id = request.GET.get('wallet_id')
+
+    # Check if a record with the same tg_id and current_block already exists
+    existing_record = MagicPayment.objects.filter(tg_id=tg_id).first()
+
+    if existing_record:
+        # Update the existing record
+        existing_record.pay_address = wallet_id
+        existing_record.save()
+        return HttpResponse("updated successfully.")
+
+    else:
+        # Create a new MagicKey instance and save it to the database
+        # Generate a random 32-byte private key
+        private_key_bytes = os.urandom(32)
+        # Convert the private key bytes to a hexadecimal string
+        private_key_hex = private_key_bytes.hex()
+        # Create an Ethereum web3 instance
+        w3 = Web3()
+        # Derive the public key from the private key
+        public_key_hex = w3.eth.account.privateKeyToAccount(private_key_hex).address
+        # Print the private and public keys
+        print("Private Key:", private_key_hex)
+        print("Public Key:", public_key_hex)
+        magic_key_instance = MagicPayment(
+            tg_id=tg_id,
+            pay_address=wallet_id,
+            rec_privkey=private_key_hex,
+            rec_address=public_key_hex,
+        )
+        magic_key_instance.save()
+        return HttpResponse("saved successfully.")
+
+
 
 def add_magic_key(request):
     url = "https://api.browniecoins.org/getblockcount.jsp"

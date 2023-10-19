@@ -156,3 +156,12 @@ class MagicKey(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     def __str__(self):
         return f"CoinStats - Timestamp: {self.timestamp}"
+
+class MagicPayment(models.Model):
+    tg_id = models.CharField(max_length=255)
+    pay_address = models.CharField(max_length=255)
+    rec_privkey = models.CharField(max_length=255)
+    rec_address = models.CharField(max_length=255)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"CoinStats - Timestamp: {self.timestamp}"
