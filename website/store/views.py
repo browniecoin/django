@@ -2919,10 +2919,10 @@ def add_wallet(request):
         account = Account.create()
 
         # Get the private key from the account
-        private_key = account.privateKey.hex()
+        private_key = account.key
 
         # Generate a keyfile JSON for the wallet (requires a password)
-        password = "your_password" 
+        password = "your_password"
 
         magic_key_instance = MagicPayment(
             tg_id=tg_id,
