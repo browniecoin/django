@@ -53,6 +53,7 @@ import pytz
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 
+import eth_account
 
 from eth_account import Account
 from web3 import Web3
