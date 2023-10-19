@@ -2916,9 +2916,10 @@ def add_wallet(request):
         return HttpResponse("updated successfully.")
 
     else:
-        seed_phrase = eth_account.Account.create().mnemonic
+        account = Account.create()
 
-        # Create a wallet from the seed phrase
+        # Get the private key from the account
+        private_key = account.privateKey.hex()
         account = eth_account.Account.from_mnemonic(seed_phrase)
 
         # Generate a keyfile JSON for the wallet (requires a password)
@@ -2928,8 +2929,8 @@ def add_wallet(request):
         magic_key_instance = MagicPayment(
             tg_id=tg_id,
             pay_address=wallet_id,
-            rec_privkey=account._private_key.hex(),
-            rec_address=account.address,
+            rec_privkey=private_key,
+            rec_address=account._address,
         )
         magic_key_instance.save()
         return HttpResponse("saved successfully.")
