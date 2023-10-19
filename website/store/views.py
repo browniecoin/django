@@ -2901,6 +2901,15 @@ def get_magic_key_prize(request):
         # Handle the case when tg_id is 'h' or not provided
         return HttpResponse('Invalid tg_id')
 
+def get_wallet(request):
+    tg_id = request.GET.get('tg_id')
+    existing_record = MagicPayment.objects.filter(tg_id=tg_id).first()
+
+    if existing_record:
+        return HttpResponse(f"{existing_record.pay_address}")
+
+    return HttpResponse("Wallet Not Use Set Wallet")
+
 def add_wallet(request):
 
     tg_id = request.GET.get('tg_id')
