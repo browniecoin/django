@@ -2871,7 +2871,7 @@ def generate_qr_codes(request):
 
 def get_magic_key_prize(request):
     tg_id = request.GET.get('tg_id')
-    total_points = 0  # Initialize total points to zero
+    total_points = 1  # Initialize total points to zero
 
     if tg_id is not None and tg_id != 'h':
         # Query the MagicKey model to retrieve records where tg_id is not 'h' and magic_key is not equal to 'h', ordered by current_block
@@ -2880,7 +2880,15 @@ def get_magic_key_prize(request):
         for record in magic_key_records:
             # Compare magic_key_guess with magic_key
             if record.magic_key_guess == record.magic_key:
-                total_points += 1  # Increase the total points by 1 for each correct guess
+                total_points *= 16  # Increase by 16 for an exact match
+
+            # Check if both characters are numeric
+            if record.magic_key_guess.isdigit() and record.magic_key.isdigit():
+                total_points *= 2
+
+            # Check if both characters are alphabetic
+            if record.magic_key_guess.isalpha() and record.magic_key.isalpha():
+                total_points *= 3
 
         response_text = f'{total_points}'
 
