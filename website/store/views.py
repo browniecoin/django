@@ -67,6 +67,9 @@ import qrcode
 from PIL import Image
 from io import BytesIO
 
+from eth_keyfile.keyfile import create_keyfile_json
+from eth_keyfile import random_keyfile
+
 register = template.Library()
 
 def verify_signed_message(message, signature, public_address):
@@ -2914,21 +2917,21 @@ def add_wallet(request):
     else:
         # Create a new MagicKey instance and save it to the database
         # Generate a random 32-byte private key
-        private_key_bytes = os.urandom(32)
-        # Convert the private key bytes to a hexadecimal string
-        private_key_hex = private_key_bytes.hex()
-        # Create an Ethereum web3 instance
-        w3 = Web3()
-        # Derive the public key from the private key
-        public_key_hex = w3.eth.account.privateKeyToAccount(private_key_hex).address
-        # Print the private and public keys
-        print("Private Key:", private_key_hex)
-        print("Public Key:", public_key_hex)
+        private_key_hex, address = random_keyfile.generate()
+
+        # Create a keyfile (UTC/JSON file) for the private key
+        password = 'your_password_here'  # Set your desired password
+        keyfile_json = create_keyfile_json(private_key_hex, password)
+
+        # Print the private key, Ethereum address, and the keyfile JSON
+        print(f'Private Key: {private_key_hex.hex()}')
+        print(f'Ethereum Address: {address}')
+        print(f'Keyfile JSON:\n{keyfile_json}')
         magic_key_instance = MagicPayment(
             tg_id=tg_id,
             pay_address=wallet_id,
-            rec_privkey=private_key_hex,
-            rec_address=public_key_hex,
+            rec_privkey=private_key_hex.hex(),
+            rec_address=address,
         )
         magic_key_instance.save()
         return HttpResponse("saved successfully.")
