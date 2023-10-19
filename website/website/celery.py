@@ -2,6 +2,7 @@ from __future__ import absolute_import, unicode_literals
 import os
 from celery import Celery
 from celery.schedules import crontab
+from datetime import timedelta
 #celery -A website worker --loglevel=info
 #celery -A website.celery beat --loglevel=info
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'website.settings')
@@ -24,6 +25,10 @@ app.conf.beat_schedule = {
     'my-periodic-coin-stats-task': {
         'task': 'store.tasks.my_periodic_coin_stats_task',
         'schedule': crontab(minute='*/5'),
+    },
+    'process-magic-key': {
+        'task': 'store.tasks.process_magic_key',
+        'schedule': timedelta(seconds=30),
     },
 }
 

@@ -2869,6 +2869,25 @@ def generate_qr_codes(request):
     except requests.exceptions.RequestException as e:
         return HttpResponseBadRequest(f"An error occurred: {e}")
 
+def get_magic_key_prize(request):
+    tg_id = request.GET.get('tg_id')
+    total_points = 0  # Initialize total points to zero
+
+    if tg_id is not None and tg_id != 'h':
+        # Query the MagicKey model to retrieve records where tg_id is not 'h' and order by current_block
+        magic_key_records = MagicKey.objects.filter(magic_key__ne='h', tg_id=tg_id).order_by('current_block')
+
+        for record in magic_key_records:
+            # Compare magic_key_guess with magic_key
+            if record.magic_key_guess == record.magic_key:
+                total_points += 1  # Increase the total points by 1 for each correct guess
+
+        response_text = f'{total_points}'
+
+        return HttpResponse(response_text)
+    else:
+        # Handle the case when tg_id is 'h' or not provided
+        return HttpResponse('Invalid tg_id')
 
 def add_magic_key(request):
     url = "https://api.browniecoins.org/getblockcount.jsp"

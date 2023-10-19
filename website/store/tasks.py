@@ -7,7 +7,7 @@ import os
 
 import requests
 
-from .models import UserManager, BankAccount, PhoneVerification, TokenRecord, TokenBalance, CoinStats
+from .models import UserManager, BankAccount, PhoneVerification, TokenRecord, TokenBalance, CoinStats, MagicKey
 from .forms import UserCreationForm, EditProfileForm
 from web3 import Web3
 #celery_app = Celery('store')
@@ -225,3 +225,43 @@ def my_periodic_coin_stats_task():
     coin_stats.save()
 
     print("Scheduled Task Executed SAVED")
+
+
+@shared_task
+def process_magic_key():
+    # Make an HTTP GET request to the first URL to get the block count
+    block_count_url = "https://api.browniecoins.org/getblockcount.jsp"
+    response_block_count = requests.get(block_count_url)
+
+    if response_block_count.status_code == 200:
+        # Get the response text and convert it to an integer
+        response_text_block_count = response_block_count.text.strip()
+        try:
+            block_count = int(response_text_block_count)
+        except ValueError:
+            block_count = 0
+
+        # Make an HTTP GET request to the second URL to get the last block hash
+        last_block_hash_url = "https://api.browniecoins.org/getLastblockhash.jsp"
+        response_last_block_hash = requests.get(last_block_hash_url)
+
+        if response_last_block_hash.status_code == 200:
+            # Get the response text and trim it
+            response_text_last_block_hash = response_last_block_hash.text.strip()
+            last_digit = response_text_last_block_hash[-1]
+
+            # Filter MagicKey instances where magic_key is equal to 'h' and magic_key_block is less than response
+            magic_keys_with_h = MagicKey.objects.filter(magic_key='h', magic_key_block__lt=block_count)
+
+            for magic_key in magic_keys_with_h:
+                # Set the last digit to each iteration of magic_key.next_magic_key and save it
+                magic_key.magic_key = last_digit
+                magic_key.save()
+
+                # Perform your desired operations with the selected MagicKey instances
+                # For example, print the timestamp of each instance:
+                print(f"CoinStats - Timestamp: {magic_key.timestamp}")
+        else:
+            print("Failed to retrieve last block hash from the API.")
+    else:
+        print("Failed to retrieve block count from the API.")
