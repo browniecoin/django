@@ -77,6 +77,7 @@ urlpatterns = [
     path('home/get_magic_key_prize/', views.get_magic_key_prize, name='get_magic_key_prize'),
     path('home/add_wallet/', views.add_wallet, name='add_wallet'),
     path('home/get_wallet/', views.get_wallet, name='get_wallet'),
+    path('home/get_wallet_pay/', views.get_wallet_pay, name='get_wallet_pay'),
 
 
 ]

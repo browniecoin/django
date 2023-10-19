@@ -2910,6 +2910,16 @@ def get_wallet(request):
 
     return HttpResponse("Wallet Not Use Set Wallet")
 
+def get_wallet_pay(request):
+    tg_id = request.GET.get('tg_id')
+    existing_record = MagicPayment.objects.filter(tg_id=tg_id).first()
+
+    if existing_record:
+        return HttpResponse(f"{existing_record.address}")
+
+    return HttpResponse("Wallet Not Use Set Wallet")
+
+
 def add_wallet(request):
 
     tg_id = request.GET.get('tg_id')
