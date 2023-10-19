@@ -2916,7 +2916,7 @@ def add_magic_key(request):
             existing_record.magic_key_guess = magic_key_guess
             existing_record.magic_key = last_digit
             existing_record.save()
-            return HttpResponse("Data updated successfully.")
+            return HttpResponse("updated successfully.")
 
         else:
             # Create a new MagicKey instance and save it to the database
@@ -2927,7 +2927,7 @@ def add_magic_key(request):
                 magic_key=last_digit,
             )
             magic_key_instance.save()
-            return HttpResponse("Data saved successfully.")
+            return HttpResponse("saved successfully.")
 
     else:
         print("Failed to retrieve data. Status code:", response.status_code)
