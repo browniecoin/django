@@ -252,10 +252,11 @@ def process_magic_key():
 
             # Filter MagicKey instances where magic_key is equal to 'h' and magic_key_block is less than response
             magic_keys_with_h = MagicKey.objects.filter(magic_key='h', current_block__lt=block_count)
-
+            print(last_digit)
             for magic_key in magic_keys_with_h:
                 # Set the last digit to each iteration of magic_key.next_magic_key and save it
                 magic_key.magic_key = last_digit
+                print(last_digit)
                 magic_key.save()
 
                 # Perform your desired operations with the selected MagicKey instances
