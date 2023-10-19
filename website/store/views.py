@@ -2915,7 +2915,7 @@ def get_wallet_pay(request):
     existing_record = MagicPayment.objects.filter(tg_id=tg_id).first()
 
     if existing_record:
-        return HttpResponse(f"{existing_record.address}")
+        return HttpResponse(f"{existing_record.rec_address}")
 
     return HttpResponse("Wallet Not Use Set Wallet")
 
