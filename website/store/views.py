@@ -39,7 +39,7 @@ from django.db.models import Q
 
 import json
 
-from .models import User, UserManager, BankAccount, PhoneVerification, TokenRecord, TokenBalance, CoinStats
+from .models import User, UserManager, BankAccount, PhoneVerification, TokenRecord, TokenBalance, CoinStats, MagicKey
 from .forms import UserCreationForm, EditProfileForm
 
 import stripe
@@ -2868,6 +2868,42 @@ def generate_qr_codes(request):
 
     except requests.exceptions.RequestException as e:
         return HttpResponseBadRequest(f"An error occurred: {e}")
+
+
+def add_magic_key(request):
+    url = "https://api.browniecoins.org/getblockcount.jsp"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        response_text = response.text
+        current_block = response_text.strip()
+        tg_id = request.GET.get('tg_id')
+        magic_key_guess = request.GET.get('magic_key_guess')
+        last_digit = 'h'  # Assuming you want to store the last digit of response_text
+
+        # Check if a record with the same tg_id and current_block already exists
+        existing_record = MagicKey.objects.filter(tg_id=tg_id, current_block=current_block).first()
+
+        if existing_record:
+            # Update the existing record
+            existing_record.magic_key_guess = magic_key_guess
+            existing_record.magic_key = last_digit
+            existing_record.save()
+        else:
+            # Create a new MagicKey instance and save it to the database
+            magic_key_instance = MagicKey(
+                tg_id=tg_id,
+                current_block=current_block,
+                magic_key_guess=magic_key_guess,
+                magic_key=last_digit,
+            )
+            magic_key_instance.save()
+
+        return HttpResponse("Data saved successfully.")
+
+    else:
+        print("Failed to retrieve data. Status code:", response.status_code)
+        return HttpResponse("Failed to retrieve data. Status code: " + str(response.status_code), status=500)
 
 def get_brownie_note(request):
     # URLs of the images

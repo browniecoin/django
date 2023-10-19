@@ -73,6 +73,7 @@ urlpatterns = [
     path('home/coin_stats/', views.coin_stats, name='coin_stats'),
     path('home/generate_qr_codes/', views.generate_qr_codes, name='generate_qr_codes'),
     path('home/get_brownie_note/', views.get_brownie_note, name='get_brownie_note'),
+    path('home/add_magic_key/', views.add_magic_key, name='add_magic_key'),
 
 ]
 

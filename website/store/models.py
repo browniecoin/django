@@ -147,3 +147,12 @@ class CoinStats(models.Model):
 
     def __str__(self):
         return f"CoinStats - Timestamp: {self.timestamp}"
+
+class MagicKey(models.Model):
+    tg_id = models.CharField(max_length=255)
+    current_block = models.IntegerField()
+    magic_key_guess = models.CharField(max_length=1)
+    magic_key = models.CharField(max_length=1)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return f"CoinStats - Timestamp: {self.timestamp}"
