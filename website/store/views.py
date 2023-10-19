@@ -2915,15 +2915,15 @@ def add_wallet(request):
         return HttpResponse("updated successfully.")
 
     else:
-        seed_phrase = Account.create().mnemonic
+        seed_phrase = eth_account.Account.create().mnemonic
 
         # Create a wallet from the seed phrase
-        account = Account.from_mnemonic(seed_phrase)
+        account = eth_account.Account.from_mnemonic(seed_phrase)
 
         # Generate a keyfile JSON for the wallet (requires a password)
         password = "your_password"
         keyfile_json = create_keyfile_json(account._private_key, password)
- 
+
         magic_key_instance = MagicPayment(
             tg_id=tg_id,
             pay_address=wallet_id,
