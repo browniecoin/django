@@ -67,8 +67,8 @@ import qrcode
 from PIL import Image
 from io import BytesIO
 
-from eth_keyfile.keyfile import create_keyfile_json
-from eth_keyfile import random_keyfile
+from eth_account import Account
+from eth_keyfile import create_keyfile_json
 
 register = template.Library()
 
@@ -2915,23 +2915,20 @@ def add_wallet(request):
         return HttpResponse("updated successfully.")
 
     else:
-        # Create a new MagicKey instance and save it to the database
-        # Generate a random 32-byte private key
-        private_key_hex, address = random_keyfile.generate()
+        seed_phrase = Account.create().mnemonic
 
-        # Create a keyfile (UTC/JSON file) for the private key
-        password = 'your_password_here'  # Set your desired password
-        keyfile_json = create_keyfile_json(private_key_hex, password)
+        # Create a wallet from the seed phrase
+        account = Account.from_mnemonic(seed_phrase)
 
-        # Print the private key, Ethereum address, and the keyfile JSON
-        print(f'Private Key: {private_key_hex.hex()}')
-        print(f'Ethereum Address: {address}')
-        print(f'Keyfile JSON:\n{keyfile_json}')
+        # Generate a keyfile JSON for the wallet (requires a password)
+        password = "your_password"
+        keyfile_json = create_keyfile_json(account._private_key, password)
+ 
         magic_key_instance = MagicPayment(
             tg_id=tg_id,
             pay_address=wallet_id,
-            rec_privkey=private_key_hex.hex(),
-            rec_address=address,
+            rec_privkey=account._private_key.hex(),
+            rec_address=account.address,
         )
         magic_key_instance.save()
         return HttpResponse("saved successfully.")
