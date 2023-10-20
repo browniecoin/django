@@ -2884,15 +2884,15 @@ def get_magic_key_prize(request):
         for record in magic_key_records:
             # Compare magic_key_guess with magic_key
             if record.magic_key_guess == record.magic_key:
-                total_points *= 16  # Increase by 16 for an exact match
+                total_points += 160  # Increase by 16 for an exact match
 
             # Check if both characters are numeric
             if record.magic_key_guess.isdigit() and record.magic_key.isdigit():
-                total_points *= 2
+                total_points += 20
 
             # Check if both characters are alphabetic
             if record.magic_key_guess.isalpha() and record.magic_key.isalpha():
-                total_points *= 3
+                total_points += 30
 
         response_text = f'{total_points}'
 
